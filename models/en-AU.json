@@ -1,0 +1,103 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "Estonia One Hundred",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
+        },
+        {
+          "name": "GetNewFactIntent",
+          "samples": [
+            "another fact",
+            "more facts",
+            "a fact",
+            "an Estonia fact",
+            "tell me a fact",
+            "tell me about Estonia",
+            "tell me an Estonia fact",
+            "give me a fact",
+            "give me an Estonia fact",
+            "tell me trivia",
+            "tell me Estonia trivia",
+            "give me trivia",
+            "give me Estonia trivia",
+            "give me some information",
+            "give me some Estonian information",
+            "give me Estonia information",
+            "tell me something",
+            "give me something"
+          ],
+          "slots": []
+        },
+        {
+          "name": "EstonianPhraseIntent",
+          "samples": [
+            "teach me Estonian",
+            "teach me Estonian language",
+            "teach me an Estonian phrase",
+            "give me an Estonian phrase",
+            "speak Estonian",
+            "speak Estonian to me"
+          ],
+          "slots": []
+        },
+        {
+          "name": "EstonianProverbIntent",
+          "samples": [
+            "give me an Estonian proverb",
+            "give me a proverb",
+            "give me an Estonian saying",
+            "give me a saying",
+            "tell me an Estonian proverb",
+            "tell me a proverb",
+            "tell me an Estonian saying",
+            "tell me a saying",
+            "for a proverb",
+            "for a saying",
+            "for an Estonian proverb",
+            "for an Estonian saying"
+          ],
+          "slots": []
+        },
+        {
+          "name": "CannotSpeakEstonianIntent",
+          "samples": [
+            "terra",
+            "terre",
+            "eye tap"
+          ],
+          "slots": []
+        },
+        {
+          "name": "CustomGoodbyeIntent",
+          "samples": [
+            "chow"
+          ],
+          "slots": []
+        }
+      ]
+    }
+  }
+}

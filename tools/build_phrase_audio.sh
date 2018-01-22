@@ -1,0 +1,1 @@
+ffmpeg -y -i $1 -ar 16000 -ab 48k -minrate 48k -codec:a libmp3lame -ac 1 -map_metadata -1 -vn -filter:a "volume=2.5" .tmp.$1  && lame .tmp.$1 -b 48 --cbr .tmp.upload.$1  &&  s3cmd put .tmp.upload.$1 s3://estonian-language-phrases/$1 && s3cmd setacl s3://estonian-language-phrases/$1 --acl-public && rm .tmp.$1 && rm .tmp.upload.$1

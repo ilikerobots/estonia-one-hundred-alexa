@@ -1,0 +1,19 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.f53d6aa0-26f6-4eef-a232-3331682626bc",
+      "was_cloned": false,
+      "merge": {
+        "skillManifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "ask-custom-estoniafacts-default"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

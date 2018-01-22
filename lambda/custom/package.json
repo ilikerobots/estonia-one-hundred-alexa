@@ -1,0 +1,27 @@
+{
+  "name": "skill-sample-nodejs-fact-i18n",
+  "version": "1.0.0",
+  "description": "I18n version of fact skill.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+
+  },
+  "keywords": [
+    "alexa",
+    "skill",
+    "fact"
+  ],
+  "author": "Amazon.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "alexa-sdk": "^1.0.12",
+    "chai": "^3.5.0",
+    "mocha": "^4.1.0",
+    "ssml-builder": "^0.4.1"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0"
+  }
+}
