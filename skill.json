@@ -3,7 +3,7 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "Learn Estonian fun facts, proverbs, and phrases",
+          "summary": "Learn Estonian fun facts, proverbs, and phrases and help celebrate Estonia's 100th birthday!",
           "examplePhrases": [
             "Alexa ask Estonia One Hundred for a fact",
             "Alexa ask Estonia One Hundred for a proverb",
@@ -22,7 +22,7 @@
           "largeIconUri": "https://s3.amazonaws.com/estonia-one-hundred-assets/Estonia_100_alexa_logo_512.png"
         },
         "en-GB": {
-          "summary": "Learn fun facts about Estonia.",
+          "summary": "Learn Estonian fun facts, proverbs, and phrases and help celebrate Estonia's 100th birthday!",
           "examplePhrases": [
             "Alexa ask Estonia One Hundred for a fact",
             "Alexa ask Estonia One Hundred for a proverb",
@@ -41,7 +41,7 @@
           "largeIconUri": "https://s3.amazonaws.com/estonia-one-hundred-assets/Estonia_100_alexa_logo_512.png"
         },
         "en-AU": {
-          "summary": "Learn fun facts about Estonia.",
+          "summary": "Learn Estonian fun facts, proverbs, and phrases and help celebrate Estonia's 100th birthday!",
           "examplePhrases": [
             "Alexa ask Estonia One Hundred for a fact",
             "Alexa ask Estonia One Hundred for a proverb",
@@ -60,7 +60,7 @@
           "largeIconUri": "https://s3.amazonaws.com/estonia-one-hundred-assets/Estonia_100_alexa_logo_512.png"
         },
         "en-CA": {
-          "summary": "Learn fun facts about Estonia.",
+          "summary": "Learn Estonian fun facts, proverbs, and phrases and help celebrate Estonia's 100th birthday!",
           "examplePhrases": [
             "Alexa ask Estonia One Hundred for a fact",
             "Alexa ask Estonia One Hundred for a proverb",
@@ -79,7 +79,7 @@
           "largeIconUri": "https://s3.amazonaws.com/estonia-one-hundred-assets/Estonia_100_alexa_logo_512.png"
         },
         "en-IN": {
-          "summary": "Learn fun facts about Estonia.",
+          "summary": "Learn Estonian fun facts, proverbs, and phrases and help celebrate Estonia's 100th birthday!",
           "examplePhrases": [
             "Alexa ask Estonia One Hundred for a fact",
             "Alexa ask Estonia One Hundred for a proverb",
