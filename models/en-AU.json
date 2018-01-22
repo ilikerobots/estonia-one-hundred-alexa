@@ -32,6 +32,8 @@
           "samples": [
             "another fact",
             "more facts",
+            "fact",
+            "facts",
             "a fact",
             "an Estonia fact",
             "tell me a fact",
@@ -59,7 +61,8 @@
             "teach me an Estonian phrase",
             "give me an Estonian phrase",
             "speak Estonian",
-            "speak Estonian to me"
+            "speak Estonian to me",
+            "Estonian language"
           ],
           "slots": []
         },
@@ -77,7 +80,10 @@
             "for a proverb",
             "for a saying",
             "for an Estonian proverb",
-            "for an Estonian saying"
+            "for an Estonian saying",
+            "for an Estonian saying",
+            "proverb",
+            "proverbs"
           ],
           "slots": []
         },
