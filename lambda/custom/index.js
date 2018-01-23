@@ -67,7 +67,7 @@ exports.handler = function (event, context, callback) {
 
 //TODO teach me how to become an e-citizen
 
-const newSessionHandlers = {
+const commonHandlers = {
     [INTENTS.HELP]: function () {
         let speech = new Speech();
         speech.sayWithSSML(getRandomFromList(Language.ESTONIAN_PHRASES.HELLOS));
@@ -86,9 +86,12 @@ const newSessionHandlers = {
     [INTENTS.GET_NEW_PROVERB]: function () {
         this.handler.state = states.PROVERB_MODE;
         this.emitWithState(INTENTS.GET_NEW_PROVERB);
-    },
-    [INTENTS.LAUNCH_REQUEST]: function () {
-        this.emit(INTENTS.HELP);
+    },   
+    [INTENTS.CANNOT_SPEAK_ESTONIAN]: function () {
+        let speech = new Speech();
+        speech.say(this.t('NO_ESTONIAN'));
+        let speechOutput = speech.ssml(true);
+        this.emit(':ask', speechOutput, this.t('PLEASE_REPEAT'));
     },
     [INTENTS.STOP]: function () {
         this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
@@ -106,9 +109,16 @@ const newSessionHandlers = {
         this.response.speak('Sorry, I didn\'t get that. ' + this.t('HELP_MESSAGE')).listen('Try again.');
         this.emit(':responseReady');
     }
+    
 };
 
-const factModeHandlers = Alexa.CreateStateHandler(states.FACT_MODE, {
+const newSessionHandlers = Object.assign({}, commonHandlers, {
+    [INTENTS.LAUNCH_REQUEST]: function () {
+        this.emit(INTENTS.HELP);
+    },
+}, commonHandlers);
+
+const factModeHandlers = Alexa.CreateStateHandler(states.FACT_MODE, Object.assign({}, commonHandlers, {
     [INTENTS.GET_NEW_FACT]: function () {
         this.handler.state = states.FACT_MODE;
         if (!(ATTRIBS.FACTS_USED in this.attributes)) {
@@ -127,22 +137,8 @@ const factModeHandlers = Alexa.CreateStateHandler(states.FACT_MODE, {
         let randomFact = randomFactEl[1];
         this.emit(':askWithCard', renderFactSpeech(randomFact, this, prefix), this.t('PLEASE_REPEAT'), "An Estonian fact", randomFact);
     },
-
-    [INTENTS.GET_NEW_PHRASE]: function () {
-        this.handler.state = states.PHRASE_MODE;
-        this.emitWithState(INTENTS.GET_NEW_PHRASE);
-    },
-    [INTENTS.GET_NEW_PROVERB]: function () {
-        this.handler.state = states.PROVERB_MODE;
-        this.emitWithState(INTENTS.GET_NEW_PROVERB);
-    },
-
     [INTENTS.YES]: function () {
         this.emitWithState(INTENTS.GET_NEW_FACT);
-    },
-    [INTENTS.NO]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
     },
     [INTENTS.REPEAT]: function () {
         if (!(ATTRIBS.FACTS_USED in this.attributes)) {
@@ -156,36 +152,10 @@ const factModeHandlers = Alexa.CreateStateHandler(states.FACT_MODE, {
             this.emit(':askWithCard', renderFactSpeech(fact, this), this.t('PLEASE_REPEAT'), "An Estonian fact", fact);
         }
     },
-    [INTENTS.HELP]: function () {
-        this.response.speak(this.t('HELP_MESSAGE')).listen(this.t('HELP_REPROMPT'));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CANCEL]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.STOP]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CANNOT_SPEAK_ESTONIAN]: function () {
-        let speech = new Speech();
-        speech.say(this.t('NO_ESTONIAN'));
-        let speechOutput = speech.ssml(true);
-        this.emit(':ask', speechOutput, this.t('PLEASE_REPEAT'));
-    },
-    [INTENTS.CUSTOM_GOODBYE]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.UNHANDLED]: function () {
-        this.response.speak('Sorry, I didn\'t get that. ' + this.t('HELP_MESSAGE')).listen('Try again.');
-        this.emit(':responseReady');
-    }
-});
+}));
 
 
-const phraseModeHandlers = Alexa.CreateStateHandler(states.PHRASE_MODE, {
+const phraseModeHandlers = Alexa.CreateStateHandler(states.PHRASE_MODE, Object.assign({}, commonHandlers, {
     [INTENTS.GET_NEW_PHRASE]: function () {
         if (!(ATTRIBS.PHRASES_USED in this.attributes)) {
             this.attributes[ATTRIBS.PHRASES_USED] = [];
@@ -199,28 +169,8 @@ const phraseModeHandlers = Alexa.CreateStateHandler(states.PHRASE_MODE, {
         this.emit(':askWithCard', renderPhraseSpeech(phrase, this), this.t('PLEASE_REPEAT'), phrase[1], 
             phrase[3] + '"' + phrase[1] + '"');
     },
-
-    [INTENTS.CANNOT_SPEAK_ESTONIAN]: function () {
-        let speech = new Speech();
-        speech.say(this.t('NO_ESTONIAN'));
-        let speechOutput = speech.ssml(true);
-        this.emit(':ask', speechOutput, this.t('PLEASE_REPEAT'));
-    },
-
-    [INTENTS.GET_NEW_FACT]: function () {
-        this.handler.state = states.FACT_MODE;
-        this.emitWithState(INTENTS.GET_NEW_FACT);
-    },
-    [INTENTS.GET_NEW_PROVERB]: function () {
-        this.handler.state = states.PROVERB_MODE;
-        this.emitWithState(INTENTS.GET_NEW_PROVERB);
-    },
     [INTENTS.YES]: function () {
         this.emitWithState(INTENTS.GET_NEW_PHRASE);
-    },
-    [INTENTS.NO]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
     },
     [INTENTS.REPEAT]: function () {
         if (!(ATTRIBS.PHRASES_USED in this.attributes)) {
@@ -235,29 +185,9 @@ const phraseModeHandlers = Alexa.CreateStateHandler(states.PHRASE_MODE, {
                 phrase[3] + '"' + phrase[1] + '"');
         }
     },
-    [INTENTS.HELP]: function () {
-        this.response.speak(this.t('HELP_MESSAGE')).listen(this.t('HELP_REPROMPT'));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CANCEL]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.STOP]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CUSTOM_GOODBYE]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.UNHANDLED]: function () {
-        this.response.speak('Sorry, I didn\'t get that. ' + this.t('HELP_MESSAGE')).listen('Try again.');
-        this.emit(':responseReady');
-    },
-});
+}));
 
-const proverbModeHandlers = Alexa.CreateStateHandler(states.PROVERB_MODE, {
+const proverbModeHandlers = Alexa.CreateStateHandler(states.PROVERB_MODE, Object.assign({}, commonHandlers, {
     [INTENTS.GET_NEW_PROVERB]: function () {
         if (!(ATTRIBS.PROVERS_USED in this.attributes)) {
             this.attributes[ATTRIBS.PROVERS_USED] = [];
@@ -270,28 +200,8 @@ const proverbModeHandlers = Alexa.CreateStateHandler(states.PROVERB_MODE, {
         let proverb = proverbEl[1];
         this.emit(':askWithCard', renderProverbSpeech(proverb, this), this.t('PLEASE_REPEAT'), "An Estonian proverb", proverb);
     },
-
-    [INTENTS.CANNOT_SPEAK_ESTONIAN]: function () {
-        let speech = new Speech();
-        speech.say(this.t('NO_ESTONIAN'));
-        let speechOutput = speech.ssml(true);
-        this.emit(':ask', speechOutput, this.t('PLEASE_REPEAT'));
-    },
-
-    [INTENTS.GET_NEW_FACT]: function () {
-        this.handler.state = states.FACT_MODE;
-        this.emitWithState(INTENTS.GET_NEW_FACT);
-    },
-    [INTENTS.GET_NEW_PHRASE]: function () {
-        this.handler.state = states.PHRASE_MODE;
-        this.emitWithState(INTENTS.GET_NEW_PHRASE);
-    },
     [INTENTS.YES]: function () {
         this.emitWithState(INTENTS.GET_NEW_PROVERB);
-    },
-    [INTENTS.NO]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
     },
     [INTENTS.REPEAT]: function () {
         if (!(ATTRIBS.PROVERS_USED in this.attributes)) {
@@ -305,27 +215,7 @@ const proverbModeHandlers = Alexa.CreateStateHandler(states.PROVERB_MODE, {
             this.emit(':askWithCard', renderProverbSpeech(proverb, this), this.t('PLEASE_REPEAT'), "An Estonian proverb", proverb);
         }
     },
-    [INTENTS.HELP]: function () {
-        this.response.speak(this.t('HELP_MESSAGE')).listen(this.t('HELP_REPROMPT'));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CANCEL]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.STOP]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.CUSTOM_GOODBYE]: function () {
-        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
-        this.emit(':responseReady');
-    },
-    [INTENTS.UNHANDLED]: function () {
-        this.response.speak('Sorry, I didn\'t get that. ' + this.t('HELP_MESSAGE')).listen('Try again.');
-        this.emit(':responseReady');
-    },
-});
+}));
 
 
 
