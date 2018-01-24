@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "Estonia One Hundred",
+      "invocationName": "estonia one hundred",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
