@@ -93,6 +93,10 @@ const commonHandlers = {
         let speechOutput = speech.ssml(true);
         this.emit(':ask', speechOutput, this.t('PLEASE_REPEAT'));
     },
+    [INTENTS.NO]: function () {
+        this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
+        this.emit(':responseReady');
+    },
     [INTENTS.STOP]: function () {
         this.response.speak(getRandomFromList(Language.ESTONIAN_PHRASES.GOODBYES));
         this.emit(':responseReady');
