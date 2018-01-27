@@ -1,11 +1,15 @@
 {
-  "name": "skill-sample-nodejs-fact-i18n",
+  "name": "estona-one-hundred-alexa",
   "version": "1.0.0",
-  "description": "I18n version of fact skill.",
+  "description": "Estonia One Hundred Alexa Skill",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
 
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilikerobots/estonia-one-hundred-alexa"
   },
   "keywords": [
     "alexa",
@@ -16,12 +20,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "alexa-sdk": "^1.0.12",
-    "chai": "^3.5.0",
-    "mocha": "^4.1.0",
     "ssml-builder": "^0.4.1"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "chai-http": "^1.0.0"
+    "chai": "^3.5.0",
+    "mocha": "^4.1.0"
   }
 }

@@ -18,10 +18,10 @@ limitations under the License.
 'use strict';
 const Alexa = require('alexa-sdk');
 const Speech = require('ssml-builder');
-const Facts = require('./facts');
-const Phrases = require('./phrases');
-const Proverbs = require('./proverbs');
-const Language = require('./language_strings');
+const Facts = require('./lib/facts');
+const Phrases = require('./lib/phrases');
+const Proverbs = require('./lib/proverbs');
+const Language = require('./lib/language_strings');
 
 const APP_ID = "amzn1.ask.skill.f53d6aa0-26f6-4eef-a232-3331682626bc";
 const SKILL_NAME = 'Estonia One Hundred';
@@ -64,6 +64,8 @@ exports.handler = function (event, context, callback) {
     alexa.resources = Language.LANGUAGE_STRINGS;
     alexa.execute();
 };
+
+exports.APP_ID = APP_ID;
 
 //TODO teach me how to become an e-citizen
 
@@ -236,7 +238,7 @@ function renderProverbSpeech(fact, that, prefix = '') {
 
 function renderPhraseSpeech(phrase, that) {
     let speech = new Speech();
-    speech.say(that.t(phrase[3])).pause('600ms').audio(phrase[0]);
+    speech.say(that.t(phrase[3])).pause('420ms').audio(phrase[0]);
     if (phrase.length > 4) {
         speech.say(phrase[4]);
     }
