@@ -25,6 +25,7 @@ describe('PhraseMode', function () {
                 expect(data.sessionAttributes.STATE).to.equal("_PHRASE_MODE");
                 expect(data.sessionAttributes.phrases_used).to.be.an('array').of.length(1);
                 expect(data.response.outputSpeech.ssml).to.contain("<audio src=");
+                expect(data.response.shouldEndSession).to.be.false;
             }, done));
         });
 
@@ -36,9 +37,51 @@ describe('PhraseMode', function () {
                 lambdaContext(function (data) {
                 expect(data.sessionAttributes.STATE).to.equal("_PHRASE_MODE");
                 expect(data.sessionAttributes.phrases_used).to.be.an('array').of.length(1).that.includes(0);
-                    expect(data.response.outputSpeech.ssml).to.contain("Thank you");
+                expect(data.response.outputSpeech.ssml).to.contain("Thank you");
                 expect(data.response.outputSpeech.ssml).to.contain("<audio src=");
+                expect(data.response.shouldEndSession).to.be.false;
             }, done));
         });
+
+        it('Repeat phrase after first hearing several', function (done) {
+            Skill['handler'](fixtures.intentRequestFixture({
+                    "STATE":"_PHRASE_MODE", 
+                    "phrases_used": [0, 5, 12, 3],
+                }, "AMAZON.RepeatIntent"),
+                lambdaContext(function (data) {
+                expect(data.sessionAttributes.STATE).to.equal("_PHRASE_MODE");
+                expect(data.sessionAttributes.phrases_used).to.be.an('array').of.length(4);
+                expect(data.sessionAttributes.phrases_used[data.sessionAttributes.phrases_used.length-1]).to.equal(3);
+                expect(data.response.outputSpeech.ssml).to.contain("<audio src=");
+                expect(data.response.shouldEndSession).to.be.false;
+            }, done));
+        });
+
+        it('Get another phrase after first hearing several', function (done) {
+            Skill['handler'](fixtures.intentRequestFixture({
+                    "STATE":"_PHRASE_MODE", 
+                    "phrases_used": [0, 5, 12, 3],
+                }, "AMAZON.YesIntent"),
+                lambdaContext(function (data) {
+                expect(data.sessionAttributes.STATE).to.equal("_PHRASE_MODE");
+                expect(data.sessionAttributes.phrases_used).to.be.an('array').of.length(5);
+                expect(data.response.outputSpeech.ssml).to.contain("<audio src=");
+                expect(data.response.shouldEndSession).to.be.false;
+            }, done));
+        });
+ 
+         it('End after first hearing several', function (done) {
+            Skill['handler'](fixtures.intentRequestFixture({
+                    "STATE":"_PHRASE_MODE", 
+                    "phrases_used": [0, 5, 12, 3],
+                }, "AMAZON.NoIntent"),
+                lambdaContext(function (data) {
+                expect(data.sessionAttributes.STATE).to.equal("_PHRASE_MODE");
+                expect(data.sessionAttributes.phrases_used).to.be.an('array').of.length(4);
+                expect(data.response.outputSpeech.ssml).to.contain("<phoneme");
+                expect(data.response.shouldEndSession).to.be.true;
+            }, done));
+        });
+        
     });
 });
